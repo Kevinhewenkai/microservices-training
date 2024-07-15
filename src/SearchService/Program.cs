@@ -20,6 +20,11 @@ builder.Services.AddMassTransit(x => {
     // kebab case is a-b-c where a b c are word
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
     x.UsingRabbitMq((context, cfg) => {
+        cfg.Host(builder.Configuration["RabbitMq:Host"], "/", host =>
+        {
+            host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
+            host.Username(builder.Configuration.GetValue("RabbitMq:Password", "guest"));
+        });
         cfg.ReceiveEndpoint("search-auction-created", e => {
             // retry 5 times for 5 second interval if mongodb is done
             e.UseMessageRetry(r => r.Interval(5, 5));
