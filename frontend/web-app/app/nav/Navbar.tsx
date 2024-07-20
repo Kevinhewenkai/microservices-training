@@ -1,9 +1,13 @@
 import React from 'react'
-import { FaCarSide } from "react-icons/fa";
 import Search from './Search';
 import Logo from './Logo';
+import LoginButton from './LoginButton';
+import { getCurrentUser } from '../actions/authAction';
+import UserActions from './UserActions';
 
-export default function Navbar() {
+export default async function Navbar() {
+  const user = await getCurrentUser();
+
   return (
     <header className='
       sticky top-0 z-50 flex justify-between bg-white 
@@ -13,7 +17,12 @@ export default function Navbar() {
           <Logo />
         </div>
         <Search />
-        <div>Right</div>
+        {
+          user ?
+          <UserActions user={user} />
+          :
+          <LoginButton />
+        }
     </header>
   )
 }
