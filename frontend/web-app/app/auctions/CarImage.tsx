@@ -2,17 +2,16 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { Auction } from '@/types'
 
 type Props = {
-    auction: Auction
+  imageUrl: string
 }
 
-export default function CarImage({auction}: Props) {
+export default function CarImage({imageUrl}: Props) {
   const [isLoading, setLoading] = useState(true)
   return (
     <Image 
-        src={auction.imageUrl} 
+        src={imageUrl} 
         alt={'image'}
         fill
         priority
