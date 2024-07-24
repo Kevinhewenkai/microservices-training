@@ -34,8 +34,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-var app = builder.Build();
+builder.Services.AddHostedService<CheckAuctionFinished>();
 
+var app = builder.Build();
 
 app.UseAuthorization();
 
