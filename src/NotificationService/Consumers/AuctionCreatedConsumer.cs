@@ -17,6 +17,6 @@ public class AuctionCreatedConsumer : IConsumer<AuctionCreated>
     {
         Console.WriteLine("==> auction created message received");
 
-        await _hubContext.Clients.All.SendAsync("AuctionCreated");
+        await _hubContext.Clients.All.SendAsync("AuctionCreated", context.Message);
     }
 }

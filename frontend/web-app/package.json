@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@microsoft/signalr": "^8.0.7",
     "flowbite-react": "^0.10.1",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
