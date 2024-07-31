@@ -9,8 +9,8 @@ import BidItem from './BidItem'
 import EmptyFilter from '@/app/components/EmptyFilter'
 import { useBidStore } from '@/app/hooks/useBidStore'
 import { getBidsForAuction } from '@/app/actions/auctionAction'
-import { numberWithCommas } from '@/lib/numberWithComma'
 import BidForm from './BidForm'
+import { numberWithCommas } from '@/app/lib/numberWithComma'
 
 type Props = {
     user: User | null

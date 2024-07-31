@@ -8,7 +8,8 @@ const nextConfig = {
             'cdn.pixabay.com',
             'media.istockphoto.com'
         ]
-    }
+    },
+    output: 'standalone'
 };
 
 export default nextConfig;
