@@ -100,8 +100,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-      - VIRTUAL_HOST=api.carties.com
-      - ClientApp=http://app.kemios.com
+      - VIRTUAL_HOST=api.kemios.com
+      - ClientApp=https://app.kemios.com
     networks:
       custom:
   bid-svc:
@@ -162,7 +162,9 @@ services:
     image: nginxproxy/nginx-proxy
     ports:
       - 80:80
+      - 443:443
     networks:
       custom:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./devcert:/etc/nginx/certs
