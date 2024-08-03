@@ -72,3 +72,6 @@ catch (Exception e)
 }
 
 app.Run();
+
+// for integration test
+public partial class Program {}
