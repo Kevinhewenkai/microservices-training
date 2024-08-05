@@ -4,6 +4,8 @@ using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Npgsql;
+using Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +30,15 @@ builder.Services.AddMassTransit(x => {
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("auction", false));
 
     // using rabbitMq
-    x.UsingRabbitMq((context, cfg) => {
+    x.UsingRabbitMq((context, cfg) => 
+    {
+        // for k8s since k8s don't have depend on
+        cfg.UseMessageRetry(r => 
+        {
+            r.Handle<RabbitMqConnectionException>();
+            r.Interval(5, TimeSpan.FromSeconds(10));
+        });
+
         cfg.Host(builder.Configuration["RabbitMq:Host"], "/", host =>
         {
             host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
@@ -60,6 +70,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGrpcService<GrpcAuctionService>();
+
+// for k8s since k8s don't have depend on
+var retryPolicy = Policy
+    .Handle<NpgsqlException>()
+    .WaitAndRetry(5, retryAttempt => TimeSpan.FromSeconds(10));
+
+retryPolicy.ExecuteAndCapture(() => DbInitializer.InitDb(app));
 
 try
 {

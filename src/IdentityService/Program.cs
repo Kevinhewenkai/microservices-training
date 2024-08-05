@@ -1,4 +1,6 @@
 ﻿using IdentityService;
+using Npgsql;
+using Polly;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -20,9 +22,15 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
+    // for k8s since k8s don't have depend on
     // this seeding is only for the template to bootstrap the DB and users.
     // in production you will likely want a different approach.
-    SeedData.EnsureSeedData(app);
+    var retryPolicy = Policy
+        .Handle<NpgsqlException>()
+        .WaitAndRetry(5, retryAttempt => TimeSpan.FromSeconds(10));
+
+    retryPolicy.ExecuteAndCapture(() => SeedData.EnsureSeedData(app));
+
 
     app.Run();
 }

@@ -20,6 +20,13 @@ builder.Services.AddMassTransit(x => {
     // kebab case is a-b-c where a b c are word
     x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
     x.UsingRabbitMq((context, cfg) => {
+        // for k8s since k8s don't have depend on
+        cfg.UseMessageRetry(r => 
+        {
+            r.Handle<RabbitMqConnectionException>();
+            r.Interval(5, TimeSpan.FromSeconds(10));
+        });
+
         cfg.Host(builder.Configuration["RabbitMq:Host"], "/", host =>
         {
             host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
@@ -54,14 +61,10 @@ app.MapControllers();
 
 app.Lifetime.ApplicationStarted.Register(async () =>
 {
-    try
-    {
-        await DbInitializer.InitDb(app);
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e);   
-    }
+    await Policy.Handle<TimeoutException>()
+        .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(10))
+        .ExecuteAndCaptureAsync(async() => await DbInitializer.InitDb(app));
+
 });
 
 app.Run();
