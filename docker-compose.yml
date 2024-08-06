@@ -35,7 +35,7 @@ services:
     networks:
       custom:
   auction-svc:
-    image: wenkaihe/auction-svc:lastest
+    image: wenkaihe/auction-svc:latest
     build:
       context: .
       dockerfile: src/AuctionService/Dockerfile
@@ -58,7 +58,7 @@ services:
     networks:
       custom:
   search-svc:
-    image: wenkaihe/search-svc:lastest
+    image: wenkaihe/search-svc:latest
     build:
       context: .
       dockerfile: src/SearchService/Dockerfile
@@ -77,7 +77,7 @@ services:
     networks:
       custom:
   identity-svc:
-    image: wenkaihe/identity-svc:lastest
+    image: wenkaihe/identity-svc:latest
     build:
       context: .
       dockerfile: src/IdentityService/Dockerfile
@@ -93,7 +93,7 @@ services:
       custom:
         ipv4_address: 10.5.0.200
   gateway-svc:
-    image: wenkaihe/gateway-svc:lastest
+    image: wenkaihe/gateway-svc:latest
     build:
       context: .
       dockerfile: src/GatewayService/Dockerfile
@@ -105,7 +105,7 @@ services:
     networks:
       custom:
   bid-svc:
-    image: wenkaihe/bid-svc:lastest
+    image: wenkaihe/bid-svc:latest
     build:
       context: .
       dockerfile: src/BiddingService/Dockerfile
@@ -124,7 +124,7 @@ services:
     networks:
       custom:
   notify-svc:
-    image: wenkaihe/notify-svc:lastest
+    image: wenkaihe/notify-svc:latest
     build:
       context: .
       dockerfile: src/NotificationService/Dockerfile
