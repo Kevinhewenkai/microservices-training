@@ -23,7 +23,7 @@ spec:
           - name: RabbitMq__Password
             value: rabbit
           - name: ConnectionStrings__MongoDbConnection
-            value: mongodb://root:mongopw@mongo-clusterip
+            value: mongodb://root:mongoPW@mongo-clusterip
           - name: AuctionServiceUrl
             value: http://auction-clusterip
 ---
@@ -37,4 +37,4 @@ spec:
     app: search-svc
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 8080
