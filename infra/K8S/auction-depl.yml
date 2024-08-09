@@ -45,7 +45,7 @@ spec:
     app: auction-svc
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: 80
     name: web
   - port: 7777
     targetPort: 7777
