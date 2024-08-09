@@ -20,8 +20,8 @@ spec:
         ports:
         - containerPort: 5432
         volumeMounts: # for persist volume
-          - mountPath: /var/data/postgres
-            name: postgresdata
+        - mountPath: /var/data/postgres
+          name: postgresdata
       volumes: # for persist volume
         - name: postgresdata
           persistentVolumeClaim:
