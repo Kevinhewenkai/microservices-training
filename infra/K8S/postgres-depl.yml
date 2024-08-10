@@ -16,7 +16,11 @@ spec:
         image: postgres
         env:
           - name: POSTGRES_PASSWORD
-            value: postgrespw
+            # value: postgrespw
+            valueFrom: 
+              secretKeyRef:
+                name: postgres-secret
+                key: password
         ports:
         - containerPort: 5432
         volumeMounts: # for persist volume

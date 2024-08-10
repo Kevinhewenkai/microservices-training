@@ -19,11 +19,23 @@ spec:
           - name: RabbitMq__Host
             value: rabbit-clusterip
           - name: RabbitMq__Username
-            value: rabbit
+            # value: rabbit
+            valueFrom:
+              secretKeyRef:
+                name: bid-secret
+                key: rabbitUn
           - name: RabbitMq__Password
-            value: rabbit
+            # value: rabbit
+            valueFrom:
+              secretKeyRef:
+                name: bid-secret
+                key: rabbitPw
           - name: ConnectionStrings__MongoDbConnection
-            value: mongodb://root:mongoPW@mongo-clusterip
+            # value: mongodb://root:mongoPW@mongo-clusterip
+            valueFrom:
+              secretKeyRef:
+                name: bid-secret
+                key: connString
           - name: IdentityServiceUrl
             value: https://id.kemios.com
           - name: GrpcAuction

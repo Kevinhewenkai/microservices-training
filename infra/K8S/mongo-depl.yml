@@ -16,9 +16,17 @@ spec:
         image: mongo
         env:
           - name: MONGO_INITDB_ROOT_USERNAME
-            value: root
+            # value: root
+            valueFrom: 
+              secretKeyRef:
+                name: mongo-secret
+                key: username
           - name: MONGO_INITDB_ROOT_PASSWORD
-            value: mongoPW
+            # value: mongoPW
+            valueFrom: 
+              secretKeyRef:
+                name: mongo-secret
+                key: password
         ports:
         - containerPort: 27017
       volumes: # for persist volume

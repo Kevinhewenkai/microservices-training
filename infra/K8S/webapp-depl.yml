@@ -17,7 +17,11 @@ spec:
         imagePullPolicy: Never
         env:
           - name: NEXTAUTH_SECRET
-            value: somethingreallyreallysecret
+            # value: somethingreallyreallysecret
+            valueFrom:
+              secretKeyRef:
+                name: webapp-secret
+                key: authSecret
           - name: NEXTAUTH_URL
             value: https://app.kemios.com
           - name: API_URL
