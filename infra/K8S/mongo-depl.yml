@@ -45,15 +45,3 @@ spec:
   ports:
   - port: 27017
     targetPort: 27017
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongo-lb
-spec:
-  type: LoadBalancer
-  selector:
-    app: mongo # name above in deploy file
-  ports:
-  - port: 27017
-    targetPort: 27017
