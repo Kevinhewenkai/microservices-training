@@ -23,6 +23,12 @@ spec:
               secretKeyRef:
                 name: webapp-secret
                 key: authSecret
+          - name: CLIENT_SECRET
+            # value: somethingreallyreallysecret
+            valueFrom:
+              secretKeyRef:
+                name: webapp-secret
+                key: clientSecret
           - name: NEXTAUTH_URL
             value: https://app.kemios.com
           - name: API_URL
